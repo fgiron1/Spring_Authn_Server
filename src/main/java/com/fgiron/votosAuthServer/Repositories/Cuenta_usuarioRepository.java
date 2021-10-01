@@ -17,6 +17,5 @@ public interface Cuenta_usuarioRepository extends JpaRepository<Cuenta_usuario, 
     
     public List<Cuenta_usuario> getCuentasUsuario();
     public Cuenta_usuario getCuentaUsuarioById();
-    public 
     
 }

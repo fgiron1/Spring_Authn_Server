@@ -1,6 +1,6 @@
 package com.fgiron.votosAuthServer.Models;
 
-import enums.VotoRealizado;
+import com.fgiron.votosAuthServer.enums.VotoRealizado;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Column;
