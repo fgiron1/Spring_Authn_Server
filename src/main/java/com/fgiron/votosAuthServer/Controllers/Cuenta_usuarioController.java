@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  *
- * @author root
+ * @author fgiron
  */
 
 @RestController
@@ -28,8 +28,9 @@ public class Cuenta_usuarioController {
         return repo.findById(id)
                 .map((Cuenta_usuario cuenta) -> {
                     cuenta.setPassword_hash(password_hash);
-                })
-                .orElseThrow(() -> new Exception());
+                    return cuenta;
+                }).orElseThrow(() -> new Exception("No se puede actualizar la cuenta"));
+                
     }
     
     @PostMapping("/cuenta")

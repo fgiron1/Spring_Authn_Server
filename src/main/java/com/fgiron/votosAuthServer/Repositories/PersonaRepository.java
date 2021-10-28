@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface PersonaRepository extends JpaRepository<Persona, Persona_Id>{
     
-    public boolean existePersona(Persona identidad);
+    //public boolean existePersona(Persona identidad);
     
 }

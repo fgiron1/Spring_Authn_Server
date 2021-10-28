@@ -20,8 +20,7 @@ public class Cuenta_usuario implements Serializable {
     
    private @Id @GeneratedValue Long id;
    
-   @OneToOne(mappedBy = "id",
-           targetEntity = Persona.class,
+   @OneToOne(targetEntity = Persona.class,
            optional = false)
    private Persona persona_fk;
    
