@@ -41,6 +41,8 @@ public class Cuenta_usuario implements Serializable {
         this.haVotado = haVotado;
     }
 
+    public Cuenta_usuario(){}
+
     public Long getId() {
         return id;
     }
