@@ -28,7 +28,7 @@ public class Cuenta_usuarioPrincipal implements UserDetails{
 
     @Override
     public String getUsername() {
-        return new String(String.valueOf(cuenta.getPersona_fk()));
+        return new String(String.valueOf(cuenta.getNIF_hash_personas()));
     }
 
     @Override
@@ -38,8 +38,7 @@ public class Cuenta_usuarioPrincipal implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        VotoRealizado haVotado = cuenta.getHaVotado();
-        return haVotado == VotoRealizado.SI;
+        return cuenta.getHaVotado();        
     }
 
     @Override

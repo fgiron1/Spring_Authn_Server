@@ -14,16 +14,20 @@ import javax.persistence.Table;
  *
  * @author fgiron
  */
-@Entity
+@Entity()
 @Table(name = "Cuentas_usuario")
 public class Cuenta_usuario implements Serializable {
     
+   //@Column(name="id")
    private @Id @GeneratedValue Long id;
    
    @OneToOne(targetEntity = Persona.class,
            optional = false)
-   private Persona persona_fk;
+   private Persona id_persona;
    
+   @Column(nullable = false)
+   private byte[] NIF_hash_personas;
+
    @Column(nullable = false)
    private byte[] password_hash;
    
@@ -31,17 +35,27 @@ public class Cuenta_usuario implements Serializable {
    private ZonedDateTime instante_creacion;
    
    @Column(nullable = false)
-   private VotoRealizado haVotado;
+   private boolean haVotado;
 
    //Una cuenta existe si y solamente si a su vez existe una persona asociada a esta.
-    public Cuenta_usuario(Persona persona_fk, byte[] password_hash, ZonedDateTime instante_creacion, VotoRealizado haVotado) {
-        this.persona_fk = persona_fk;
+    public Cuenta_usuario(Long id, Persona id_persona, byte[] NIF_hash_personas, byte[] password_hash, ZonedDateTime instante_creacion, boolean haVotado) {
+        this.id = id;
+        this.id_persona = id_persona;
+        this.NIF_hash_personas = NIF_hash_personas;
         this.password_hash = password_hash;
         this.instante_creacion = instante_creacion;
         this.haVotado = haVotado;
     }
 
     public Cuenta_usuario(){}
+
+    public byte[] getNIF_hash_personas(){
+        return this.NIF_hash_personas;
+    }
+
+    public void setNIF_hash_personas(byte[] NIF_hash_personas){
+        this.NIF_hash_personas = NIF_hash_personas;
+    }
 
     public Long getId() {
         return id;
@@ -51,12 +65,12 @@ public class Cuenta_usuario implements Serializable {
         this.id = id;
     }
 
-    public Persona getPersona_fk() {
-        return persona_fk;
+    public Persona getId_persona() {
+        return id_persona;
     }
 
-    public void setPersona_fk(Persona persona_fk) {
-        this.persona_fk = persona_fk;
+    public void setId_persona(Persona id_persona) {
+        this.id_persona = id_persona;
     }
 
     public byte[] getPassword_hash() {
@@ -75,11 +89,11 @@ public class Cuenta_usuario implements Serializable {
         this.instante_creacion = instante_creacion;
     }
 
-    public VotoRealizado getHaVotado() {
+    public boolean getHaVotado() {
         return haVotado;
     }
 
-    public void setHaVotado(VotoRealizado haVotado) {
+    public void setHaVotado(boolean haVotado) {
         this.haVotado = haVotado;
     }
 

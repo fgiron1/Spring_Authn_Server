@@ -14,7 +14,7 @@ import javax.persistence.GeneratedValue;
  */
 public class Persona_Id implements Serializable {
     
-    private @GeneratedValue Long id;
+    private @GeneratedValue Long id_persona;
     private byte[] NIF_hash;
 
     public Persona_Id() {
@@ -24,19 +24,19 @@ public class Persona_Id implements Serializable {
         this.NIF_hash = NIF_hash;
     }
     
-    public Persona_Id(Long id, byte[] NIF_hash) {
-        this.id = id;
+    public Persona_Id(Long id_persona, byte[] NIF_hash) {
+        this.id_persona = id_persona;
         this.NIF_hash = NIF_hash;
     }
 
     
     
-    public Long getId() {
-        return id;
+    public Long getId_persona() {
+        return id_persona;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId_persona(Long id_persona) {
+        this.id_persona = id_persona;
     }
 
     public byte[] getNIF_hash() {
