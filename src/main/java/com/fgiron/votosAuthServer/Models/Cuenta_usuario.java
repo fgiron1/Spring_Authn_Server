@@ -1,14 +1,20 @@
 package com.fgiron.votosAuthServer.Models;
 
-import com.fgiron.votosAuthServer.enums.VotoRealizado;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 /**
  *
@@ -18,43 +24,48 @@ import javax.persistence.Table;
 @Table(name = "Cuentas_usuario")
 public class Cuenta_usuario implements Serializable {
     
-   //@Column(name="id")
-   private @Id @GeneratedValue Long id;
+   @Column(name="id")
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
+   @Id
+   private Long id;
    
    @OneToOne(targetEntity = Persona.class,
-           optional = false)
+   optional = false,
+   fetch = FetchType.LAZY)
+   @JoinColumns({//El nombre de las columnas en bbdd (tabla física Cuentas_usuario) que estarán relacionadas con la columna 
+       @JoinColumn(name="id_persona", referencedColumnName = "id"),
+       @JoinColumn(name="NIF_hash_personas", referencedColumnName = "NIF_hash")
+   })
+   @NotFound(action = NotFoundAction.IGNORE)
    private Persona id_persona;
-   
-   @Column(nullable = false)
-   private byte[] NIF_hash_personas;
 
    @Column(nullable = false)
-   private byte[] password_hash;
+   private String password_hash;
    
    @Column(nullable = false)
    private ZonedDateTime instante_creacion;
    
    @Column(nullable = false)
-   private boolean haVotado;
+   private boolean ha_votado;
 
    //Una cuenta existe si y solamente si a su vez existe una persona asociada a esta.
-    public Cuenta_usuario(Long id, Persona id_persona, byte[] NIF_hash_personas, byte[] password_hash, ZonedDateTime instante_creacion, boolean haVotado) {
+    public Cuenta_usuario(Long id, Persona id_persona, String NIF_hash_personas, String password_hash, ZonedDateTime instante_creacion, boolean ha_votado) {
         this.id = id;
         this.id_persona = id_persona;
-        this.NIF_hash_personas = NIF_hash_personas;
+        this.id_persona.getId().setNIF_hash(NIF_hash_personas);
         this.password_hash = password_hash;
         this.instante_creacion = instante_creacion;
-        this.haVotado = haVotado;
+        this.ha_votado = ha_votado;
     }
 
     public Cuenta_usuario(){}
 
-    public byte[] getNIF_hash_personas(){
-        return this.NIF_hash_personas;
+    public String getNIF_hash_personas(){
+        return this.id_persona.getId().getNIF_hash();
     }
 
-    public void setNIF_hash_personas(byte[] NIF_hash_personas){
-        this.NIF_hash_personas = NIF_hash_personas;
+    public void setNIF_hash_personas(String NIF_hash_personas){
+        this.id_persona.getId().setNIF_hash(NIF_hash_personas);
     }
 
     public Long getId() {
@@ -73,11 +84,11 @@ public class Cuenta_usuario implements Serializable {
         this.id_persona = id_persona;
     }
 
-    public byte[] getPassword_hash() {
+    public String getPassword_hash() {
         return password_hash;
     }
 
-    public void setPassword_hash(byte[] password_hash) {
+    public void setPassword_hash(String password_hash) {
         this.password_hash = password_hash;
     }
 
@@ -89,12 +100,12 @@ public class Cuenta_usuario implements Serializable {
         this.instante_creacion = instante_creacion;
     }
 
-    public boolean getHaVotado() {
-        return haVotado;
+    public boolean getHa_Votado() {
+        return ha_votado;
     }
 
-    public void setHaVotado(boolean haVotado) {
-        this.haVotado = haVotado;
+    public void setHa_Votado(boolean ha_votado) {
+        this.ha_votado = ha_votado;
     }
 
     

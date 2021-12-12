@@ -10,6 +10,8 @@ import java.util.Map;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.fgiron.votosAuthServer.Models.Oauth_token;
+import com.fgiron.votosAuthServer.Repositories.Oauth_tokenRepository;
 
 public class JwtHelper {
     
@@ -30,8 +32,8 @@ public class JwtHelper {
 		
 		// Add claims
 		claims.forEach(jwtBuilder::withClaim);
-		
-		// Add expiredAt and etc
+
+		// Add time expiration
 		return jwtBuilder
 				.withNotBefore(new Date())
 				.withExpiresAt(calendar.getTime())

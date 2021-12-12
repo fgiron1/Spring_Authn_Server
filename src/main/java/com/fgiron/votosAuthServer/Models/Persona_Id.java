@@ -6,30 +6,38 @@
 package com.fgiron.votosAuthServer.Models;
 
 import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.GeneratedValue;
+
+import lombok.Data;
 
 /**
  *
  * @author fgiron
  */
+@Data
+@Embeddable
 public class Persona_Id implements Serializable {
-    
+  
+    @Column(name="id")
     private @GeneratedValue Long id_persona;
-    private byte[] NIF_hash;
+
+    @Column(name="NIF_hash")
+    private String NIF_hash;
 
     public Persona_Id() {
     }
 
-    public Persona_Id(byte[] NIF_hash) {
+    public Persona_Id(String NIF_hash) {
         this.NIF_hash = NIF_hash;
     }
     
-    public Persona_Id(Long id_persona, byte[] NIF_hash) {
+    public Persona_Id(Long id_persona, String NIF_hash) {
         this.id_persona = id_persona;
         this.NIF_hash = NIF_hash;
-    }
-
-    
+    }    
     
     public Long getId_persona() {
         return id_persona;
@@ -39,11 +47,11 @@ public class Persona_Id implements Serializable {
         this.id_persona = id_persona;
     }
 
-    public byte[] getNIF_hash() {
+    public String getNIF_hash() {
         return NIF_hash;
     }
 
-    public void setNIF_hash(byte[] NIF_hash) {
+    public void setNIF_hash(String NIF_hash) {
         this.NIF_hash = NIF_hash;
     }
     

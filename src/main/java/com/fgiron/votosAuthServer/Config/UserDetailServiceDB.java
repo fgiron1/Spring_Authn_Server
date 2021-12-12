@@ -15,8 +15,8 @@ public class UserDetailServiceDB implements UserDetailsService{
     @Autowired
     private Cuenta_usuarioRepository userRepository;
 
-    public UserDetails loadUserByNIFAndPassword(String NIF_hash, String password_hash){
-        Cuenta_usuario cuenta = userRepository.existeUsuario(NIF_hash.getBytes(), password_hash.getBytes());
+    public Cuenta_usuarioPrincipal loadUserByNIFAndPassword(String NIF_hash, String password_hash){
+        Cuenta_usuario cuenta = userRepository.existeUsuario(NIF_hash, password_hash);
         if(cuenta == null){
             throw new UsernameNotFoundException(NIF_hash);
         }

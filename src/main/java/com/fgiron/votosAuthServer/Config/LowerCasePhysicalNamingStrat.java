@@ -26,9 +26,28 @@ public class LowerCasePhysicalNamingStrat extends PhysicalNamingStrategyStandard
 
     @Override
     public Identifier toPhysicalColumnName(Identifier name, JdbcEnvironment context) {
-        return super.toPhysicalTableName((new Identifier(
+        boolean esHaVotado = name.getText().contains("votado");
+        
+        return super.toPhysicalColumnName((new Identifier(
                     name.getText().toLowerCase(), name.isQuoted())), context);
+         /*else {
+            return super.toPhysicalColumnName((new Identifier(
+                    camelCase(name.getText()), name.isQuoted())), context);
+        }*/
+        
     }
     
+    private static String camelCase(String s){
+        String[] parts = s.split("_");
+        String camelCaseResult = "";
+        
+        for(String part : parts){
+            camelCaseResult += capitalize(part);
+        }
+
+        return camelCaseResult;
+
+    }
+
 
 }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 
 /**
@@ -12,9 +13,11 @@ import javax.persistence.Entity;
  */
 
 @Entity
+@Table(name="Personas")
 public class Persona implements Serializable {
     
     @EmbeddedId
+    @Column(name="id")
     private Persona_Id id;
     
     @Column(nullable = false)

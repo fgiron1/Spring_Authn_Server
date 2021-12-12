@@ -1,24 +1,34 @@
 package com.fgiron.votosAuthServer.Config;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import com.fgiron.votosAuthServer.Models.Cuenta_usuario;
-import com.fgiron.votosAuthServer.enums.VotoRealizado;
-
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class Cuenta_usuarioPrincipal implements UserDetails{
 
     private Cuenta_usuario cuenta;
+    private ArrayList<GrantedAuthority> authorities;
 
     public Cuenta_usuarioPrincipal(Cuenta_usuario cuenta) {
+        
         this.cuenta = cuenta;
+        this.authorities = new ArrayList<>();
+        this.authorities.add(new SimpleGrantedAuthority("votos.write"));
+        this.authorities.add(new SimpleGrantedAuthority("votos_senado.write"));
+        this.authorities.add(new SimpleGrantedAuthority("integrantes.read"));
+        this.authorities.add(new SimpleGrantedAuthority("votos_partido.read"));
+        this.authorities.add(new SimpleGrantedAuthority("elecciones.read"));
+        this.authorities.add(new SimpleGrantedAuthority("tipos_eleccion.read"));
+
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return this.authorities;
     }
 
     @Override
@@ -38,19 +48,17 @@ public class Cuenta_usuarioPrincipal implements UserDetails{
 
     @Override
     public boolean isAccountNonLocked() {
-        return cuenta.getHaVotado();        
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        // TODO Auto-generated method stub
-        return false;
+        return !cuenta.getHa_Votado();
     }
 
 }

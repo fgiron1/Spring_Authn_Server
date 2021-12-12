@@ -43,22 +43,18 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.config.ClientSettings;
 import org.springframework.security.oauth2.server.authorization.config.ProviderSettings;
+import org.springframework.security.oauth2.server.authorization.config.TokenSettings;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class AuthorizationServerConfig {
 
-	//@Autowired
-	//private final JwtEncoder jwtEncoder ;
 
-	/*public AuthorizationServerConfig(JwtEncoder encoder){
-		this.jwtEncoder = encoder;
-	}*/
+	public AuthorizationServerConfig(){
+	}
 
 	@Autowired
 	ApplicationContext appContext;
-
-	public AuthorizationServerConfig(){}
 
 	/*@Bean
 	@Order(Ordered.HIGHEST_PRECEDENCE)
@@ -67,7 +63,7 @@ public class AuthorizationServerConfig {
 		return http.formLogin(Customizer.withDefaults()).build();
 	}*/
 	
-	// @formatter:off
+
 	@Bean
 	public RegisteredClientRepository registeredClientRepository(JdbcTemplate jdbcTemplate) {
 
@@ -81,6 +77,7 @@ public class AuthorizationServerConfig {
 				.redirectUri("http://127.0.0.1:8080/authorized")
 				.scope("voto.read")
 				.scope("voto.write")
+				//.tokenSettings(tokenSettings)
 				.clientSettings(ClientSettings.builder().requireAuthorizationConsent(false).build())
 				.build();
 
@@ -88,7 +85,6 @@ public class AuthorizationServerConfig {
 
 		return new InMemoryRegisteredClientRepository(registeredClient);
 	}
-	// @formatter:on
 
 	/*@Bean
 	public OAuth2AuthorizationService authorizationService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
@@ -98,6 +94,12 @@ public class AuthorizationServerConfig {
 	/*@Bean
 	public OAuth2AuthorizationConsentService authorizationConsentService(JdbcTemplate jdbcTemplate, RegisteredClientRepository registeredClientRepository) {
 		return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, registeredClientRepository);
+	}*/
+
+	/*@Bean
+	public TokenSettings tokenSettings(){
+		return TokenSettings.builder()
+			.
 	}*/
 
 	@Bean
@@ -141,8 +143,7 @@ public class AuthorizationServerConfig {
 	/*@Bean
     public OAuth2AuthorizationCodeAuthenticationProvider authProvider(JdbcTemplate jdbc, RegisteredClientRepository repo) {
         OAuth2AuthorizationService oauth2Service = authorizationService(jdbc, repo);
-        OAuth2AuthorizationCodeAuthenticationProvider authenticationProvider = new OAuth2AuthorizationCodeAuthenticationProvider(oauth2Service, jwtEncoder);
+        OAuth2AuthorizationCodeAuthenticationProvider authenticationProvider = new OAuth2AuthorizationCodeAuthenticationProvider(oauth2Service, );
         return authenticationProvider;
     }*/
-
 }
